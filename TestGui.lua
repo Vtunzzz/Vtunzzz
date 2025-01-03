@@ -144,8 +144,8 @@ end)
 -- Tạo Frame chứa toggle
 local toggleContainer = Instance.new("Frame")
 toggleContainer.Parent = frame -- Kết nối với Frame chính
-toggleContainer.Size = UDim2.new(0.3, 0, 0.1, 0) -- Chiếm 30% rộng, 10% cao của Frame
-toggleContainer.Position = UDim2.new(0.35, 0, 0.8, 0) -- Nằm giữa gần dưới Frame
+toggleContainer.Size = UDim2.new(0.2, 0, 0.05, 0) -- Toggle nhỏ gọn (20% rộng, 5% cao của Frame)
+toggleContainer.Position = UDim2.new(0.4, 0, 0.85, 0) -- Nằm giữa gần dưới Frame
 toggleContainer.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Màu đỏ (tắt mặc định)
 toggleContainer.BorderSizePixel = 2
 toggleContainer.BorderColor3 = Color3.fromRGB(255, 255, 255)
@@ -159,8 +159,8 @@ toggleCorner.Parent = toggleContainer
 -- Tạo nút tròn
 local toggleButton = Instance.new("Frame")
 toggleButton.Parent = toggleContainer
-toggleButton.Size = UDim2.new(0.4, 0, 1, 0) -- Nút chiếm 40% rộng, toàn bộ cao
-toggleButton.Position = UDim2.new(0, 0, 0, 0) -- Vị trí bên trái (tắt)
+toggleButton.Size = UDim2.new(0.4, 0, 0.8, 0) -- Nút chiếm 40% rộng, cao 80% của toggle
+toggleButton.Position = UDim2.new(0, 0, 0.1, 0) -- Vị trí bên trái (tắt)
 toggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Màu trắng
 toggleButton.BorderSizePixel = 0
 
@@ -178,16 +178,10 @@ toggleContainer.InputBegan:Connect(function(input)
         isOn = not isOn -- Thay đổi trạng thái
         if isOn then
             toggleContainer.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Màu xanh (bật)
-            toggleButton:TweenPosition(UDim2.new(0.6, 0, 0, 0), "Out", "Sine", 0.2, true) -- Nút sang phải
+            toggleButton:TweenPosition(UDim2.new(0.6, 0, 0.1, 0), "Out", "Sine", 0.2, true) -- Nút sang phải
         else
             toggleContainer.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Màu đỏ (tắt)
-            toggleButton:TweenPosition(UDim2.new(0, 0, 0, 0), "Out", "Sine", 0.2, true) -- Nút sang trái
+            toggleButton:TweenPosition(UDim2.new(0, 0, 0.1, 0), "Out", "Sine", 0.2, true) -- Nút sang trái
         end
     end
 end)
-
-if isOn then
-    print("Toggle is ON")
-else
-    print("Toggle is OFF")
-end
