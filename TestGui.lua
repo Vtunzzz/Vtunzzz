@@ -141,3 +141,37 @@ rightCheckBox.MouseButton1Click:Connect(function()
     leftCheckBox.Image = "" -- Bỏ tích bên trái
     checkBoxLabel.Text = selected
 end)
+-- Tạo Frame chứa toggle
+local toggleContainer = Instance.new("Frame")
+toggleContainer.Parent = frame -- Kết nối với Frame chính
+toggleContainer.Size = UDim2.new(0.2, 0, 0.1, 0) -- Chiếm 20% rộng, 10% cao của Frame
+toggleContainer.Position = UDim2.new(0.4, 0, 0.8, 0) -- Nằm giữa gần dưới Frame
+toggleContainer.BackgroundTransparency = 1 -- Không nền
+
+-- Tạo nút Toggle
+local toggleButton = Instance.new("TextButton")
+toggleButton.Parent = toggleContainer
+toggleButton.Size = UDim2.new(1, 0, 1, 0) -- Chiều rộng và cao bằng container
+toggleButton.Position = UDim2.new(0, 0, 0, 0)
+toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Màu đỏ (mặc định là tắt)
+toggleButton.Text = "OFF" -- Nội dung mặc định
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- Màu chữ trắng
+toggleButton.Font = Enum.Font.SourceSans
+toggleButton.TextSize = 20
+toggleButton.BorderSizePixel = 2
+toggleButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Tạo trạng thái Toggle
+local isOn = false -- Mặc định là tắt
+
+-- Sự kiện khi nhấn nút Toggle
+toggleButton.MouseButton1Click:Connect(function()
+    isOn = not isOn -- Thay đổi trạng thái
+    if isOn then
+        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Chuyển sang màu xanh (bật)
+        toggleButton.Text = "ON"
+    else
+        toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Chuyển sang màu đỏ (tắt)
+        toggleButton.Text = "OFF"
+    end
+end)
