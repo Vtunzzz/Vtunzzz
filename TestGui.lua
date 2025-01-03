@@ -185,3 +185,9 @@ toggleContainer.InputBegan:Connect(function(input)
         end
     end
 end)
+
+if isOn then
+    print("Toggle is ON")
+else
+    print("Toggle is OFF")
+end
