@@ -144,34 +144,44 @@ end)
 -- Tạo Frame chứa toggle
 local toggleContainer = Instance.new("Frame")
 toggleContainer.Parent = frame -- Kết nối với Frame chính
-toggleContainer.Size = UDim2.new(0.2, 0, 0.1, 0) -- Chiếm 20% rộng, 10% cao của Frame
-toggleContainer.Position = UDim2.new(0.4, 0, 0.8, 0) -- Nằm giữa gần dưới Frame
-toggleContainer.BackgroundTransparency = 1 -- Không nền
+toggleContainer.Size = UDim2.new(0.3, 0, 0.1, 0) -- Chiếm 30% rộng, 10% cao của Frame
+toggleContainer.Position = UDim2.new(0.35, 0, 0.8, 0) -- Nằm giữa gần dưới Frame
+toggleContainer.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Màu đỏ (tắt mặc định)
+toggleContainer.BorderSizePixel = 2
+toggleContainer.BorderColor3 = Color3.fromRGB(255, 255, 255)
+toggleContainer.ClipsDescendants = true -- Đảm bảo nút không vượt ra ngoài
 
--- Tạo nút Toggle
-local toggleButton = Instance.new("TextButton")
+-- Bo góc cho toggle
+local toggleCorner = Instance.new("UICorner")
+toggleCorner.CornerRadius = UDim.new(1, 0) -- Bo góc tròn
+toggleCorner.Parent = toggleContainer
+
+-- Tạo nút tròn
+local toggleButton = Instance.new("Frame")
 toggleButton.Parent = toggleContainer
-toggleButton.Size = UDim2.new(1, 0, 1, 0) -- Chiều rộng và cao bằng container
-toggleButton.Position = UDim2.new(0, 0, 0, 0)
-toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Màu đỏ (mặc định là tắt)
-toggleButton.Text = "OFF" -- Nội dung mặc định
-toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- Màu chữ trắng
-toggleButton.Font = Enum.Font.SourceSans
-toggleButton.TextSize = 20
-toggleButton.BorderSizePixel = 2
-toggleButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.Size = UDim2.new(0.4, 0, 1, 0) -- Nút chiếm 40% rộng, toàn bộ cao
+toggleButton.Position = UDim2.new(0, 0, 0, 0) -- Vị trí bên trái (tắt)
+toggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Màu trắng
+toggleButton.BorderSizePixel = 0
+
+-- Bo góc cho nút tròn
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(1, 0) -- Bo góc tròn
+buttonCorner.Parent = toggleButton
 
 -- Tạo trạng thái Toggle
 local isOn = false -- Mặc định là tắt
 
--- Sự kiện khi nhấn nút Toggle
-toggleButton.MouseButton1Click:Connect(function()
-    isOn = not isOn -- Thay đổi trạng thái
-    if isOn then
-        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Chuyển sang màu xanh (bật)
-        toggleButton.Text = "ON"
-    else
-        toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Chuyển sang màu đỏ (tắt)
-        toggleButton.Text = "OFF"
+-- Sự kiện khi nhấn toggle
+toggleContainer.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        isOn = not isOn -- Thay đổi trạng thái
+        if isOn then
+            toggleContainer.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Màu xanh (bật)
+            toggleButton:TweenPosition(UDim2.new(0.6, 0, 0, 0), "Out", "Sine", 0.2, true) -- Nút sang phải
+        else
+            toggleContainer.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Màu đỏ (tắt)
+            toggleButton:TweenPosition(UDim2.new(0, 0, 0, 0), "Out", "Sine", 0.2, true) -- Nút sang trái
+        end
     end
 end)
